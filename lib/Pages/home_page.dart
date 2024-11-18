@@ -26,7 +26,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.restaurant_menu),
-            Text('COOKLY Martin',
+            Text('COOKLY Martin y goku',
                 style: TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
