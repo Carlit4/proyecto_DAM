@@ -13,14 +13,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   List paginas = [RecetasPage(), CategoriasPage()];
   int paginaSeleccionada = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       //APPBAR
       appBar: AppBar(
         backgroundColor: Color(0xFFFEB9D6),
@@ -28,7 +26,8 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.restaurant_menu),
-            Text('COOKLY', style: TextStyle(fontWeight: FontWeight.bold)),
+            Text('COOKLY Martin',
+                style: TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
       ),
