@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "446602697776",
+    "project_id": "dam-proyecto2115",
+    "storage_bucket": "dam-proyecto2115.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:446602697776:android:2b00d19ee79cc09d9861f5",
+        "android_client_info": {
+          "package_name": "com.proyectobonito.u3_firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjwsDFxMduXxFxb5ltYSTTb2JsShdBmJM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

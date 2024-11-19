@@ -3,18 +3,10 @@ import 'package:flutter/material.dart';
 class RecetasWidget extends StatelessWidget {
   const RecetasWidget({
     super.key,
-    required this.titulo, 
-    required this.tiempoCoccion,
-    required this.calificacion, // Calificación de la receta
-    required this.categoria, // Agregado: Categoria de la receta
-    required this.rutaImagen, // Ruta de la imagen de los assets
+    required this.receta,
   });
 
-  final String titulo; // Título de la receta
-  final String calificacion; // Calificación de la receta
-  final String tiempoCoccion; // Tiempo de cocción
-  final String categoria; // Categoría de la receta
-  final String rutaImagen; // Ruta de la imagen de los assets
+  final dynamic receta;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +30,7 @@ class RecetasWidget extends StatelessWidget {
             Colors.black.withOpacity(0.35),
             BlendMode.multiply,
           ),
-          image: AssetImage(rutaImagen), // Usando ruta de imagen local
+          image: AssetImage(receta['rutaImagen']), // Usando ruta de imagen local
           fit: BoxFit.cover,
         ),
       ),
@@ -49,7 +41,7 @@ class RecetasWidget extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5.0),
               child: Text(
-                titulo,
+                receta['titulo'],
                 style: const TextStyle(
                   fontSize: 19,
                   color: Colors.white,
@@ -82,7 +74,7 @@ class RecetasWidget extends StatelessWidget {
                       ),
                       const SizedBox(width: 7),
                       Text(
-                        calificacion,
+                        receta['calificacion'],
                         style: const TextStyle(color: Colors.white),
                       ),
                     ],
@@ -104,7 +96,7 @@ class RecetasWidget extends StatelessWidget {
                       ),
                       const SizedBox(width: 7),
                       Text(
-                        tiempoCoccion,
+                        receta['tiempoCoccion'],
                         style: const TextStyle(color: Colors.white),
                       ),
                     ],
@@ -127,7 +119,7 @@ class RecetasWidget extends StatelessWidget {
                       ),
                       const SizedBox(width: 7),
                       Text(
-                        categoria,
+                        receta['categoria'],
                         style: const TextStyle(color: Colors.white),
                       ),
                     ],

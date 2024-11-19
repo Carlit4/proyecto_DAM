@@ -1,9 +1,8 @@
 import 'package:dam_cookly/Pages/categorias_page.dart';
+import 'package:dam_cookly/Pages/recetas_agregar.dart';
 import 'package:dam_cookly/Pages/recetas_page.dart';
 import 'package:dam_cookly/widget/drawe_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/icon_map.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,6 +29,15 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
+      ),
+
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepOrange,
+        foregroundColor: Colors.white,
+        child: Icon(Icons.add),
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => RecetasAgregar()));
+        },
       ),
 
       //DAWER
