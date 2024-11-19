@@ -1,4 +1,5 @@
 import 'package:dam_cookly/Pages/home_page.dart';
+import 'package:dam_cookly/Pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -6,12 +7,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       options: FirebaseOptions(
-      apiKey: "AIzaSyAjwsDFxMduXxFxb5ltYSTTb2JsShdBmJM",
-      appId: "1:446602697776:android:2b00d19ee79cc09d9861f5",
-      messagingSenderId: "446602697776",
-      projectId: "dam-proyecto2115",
-      )
-  );
+    apiKey: "AIzaSyAjwsDFxMduXxFxb5ltYSTTb2JsShdBmJM",
+    appId: "1:446602697776:android:2b00d19ee79cc09d9861f5",
+    messagingSenderId: "446602697776",
+    projectId: "dam-proyecto2115",
+  ));
   runApp(const MyApp());
 }
 
@@ -25,18 +25,16 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: HomePage(),
+      home: LoginPage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
 
   final String title;
 
