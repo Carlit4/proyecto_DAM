@@ -167,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 const SizedBox(height: 25),
-                //boton inicio sesion de google
+                //boton inicio de sesion de google
                 ElevatedButton(
                   onPressed: () {
                     AuthService().signInWithGoogle();
