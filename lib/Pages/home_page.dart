@@ -24,6 +24,29 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List paginas = [RecetasPage(), CategoriasPage()];
   int paginaSeleccionada = 0;
+  String? userEmail;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserEmail(); // Cargar el correo al inicializar
+  }
+
+  Future<void> _loadUserEmail() async {
+    try {
+      final user = await AuthService().currentUser();
+      setState(() {
+        userEmail = user?.email; // Guardar el correo del usuario
+        isLoading = false; // Detener la carga
+      });
+    } catch (e) {
+      print("Error al cargar el usuario: $e");
+      setState(() {
+        isLoading = false; // Detener la carga incluso en caso de error
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +74,7 @@ class _HomePageState extends State<HomePage> {
         },
       ),
 
-      //DAWER
+      //DRAWER
       endDrawer: Drawer(
         backgroundColor: Color(0xFFFFFFFF),
         child: ListView(
@@ -104,19 +127,28 @@ class _HomePageState extends State<HomePage> {
             Divider(),
             ListTile(
               trailing: TextButton(
-                onPressed: () {
-                  // logica cierre sesion
-                  FirebaseAuth.instance.signOut();
-                  // Redirigir a login
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                    (Route<dynamic> route) => false,
-                  );
+                onPressed: () async {
+                  try {
+                    // Lógica de cierre de sesión usando AuthService
+                    await AuthService().signOut();
+
+                    // Redirigir a LoginPage
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                      (Route<dynamic> route) => false,
+                    );
+                  } catch (e) {
+                    // Manejo de errores (opcional)
+                    print("Error al cerrar sesión: $e");
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Error al cerrar sesión')),
+                    );
+                  }
                 },
                 child: Text('Cerrar sesión'),
               ),
-            )
+            ),
           ],
         ),
       ),

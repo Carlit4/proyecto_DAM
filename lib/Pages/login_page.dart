@@ -34,7 +34,8 @@ class _LoginPageState extends State<LoginPage> {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text(ex.toString()),
+          title: Text(ex.toString() +
+              ' Inicio de sesion no habilitado, inicie sesion con google...'),
         ),
       );
     }
