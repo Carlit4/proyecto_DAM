@@ -12,7 +12,6 @@ class _RecetasAgregarState extends State<RecetasAgregar> {
   final formKey = GlobalKey<FormState>();
 
   TextEditingController tituloCtrl = TextEditingController();
-  TextEditingController categoriaCtrl = TextEditingController();
   TextEditingController calificacionCtrl = TextEditingController();
   TextEditingController tiempoCoccionCtrl = TextEditingController();
   TextEditingController imagenCtrl = TextEditingController();
@@ -45,59 +44,127 @@ class _RecetasAgregarState extends State<RecetasAgregar> {
           key: formKey,
           child: ListView(
             children: [
-              TextFormField(
-                controller: tituloCtrl,
-                decoration: InputDecoration(
-                  labelText: 'Titulo',
-                  errorText: tituloError,
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: TextFormField(
+                  validator: (titulo) {
+                    if (titulo!.isEmpty) {
+                      return 'El título es requerido';
+                    }
+                    return null;
+                  },
+                  controller: tituloCtrl,
+                  decoration: InputDecoration(
+                    labelText: 'Título',
+                  ),
                 ),
               ),
-              StreamBuilder(
-                stream: FsService().categorias(),
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting) {
-                    return Text('Cargando categoria...');
-                  }
-                  var categoria = snapshot.data!.docs;
-                  return DropdownButtonFormField<int>(
-                    decoration: InputDecoration(
-                      labelText: 'Categoria',
-                      errorText: categoriaError,
-                    ),
-                    value: categoriaSeleccionada,
-                    onChanged: (value) {
-                      categoriaSeleccionada = value!;
-                    },
-                    items: categoria.map<DropdownMenuItem<int>>((categoria) {
-                      return DropdownMenuItem<int>(
-                        child: Text(categoria['nombre']),
-                        value: categoria['id'],
-                      );
-                    }).toList(),
-                  );
-                },
-              ),
-              TextFormField(
-                controller: calificacionCtrl,
-                decoration: InputDecoration(
-                  labelText: 'Calificacion',
-                  errorText: calificacionError,
+
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: StreamBuilder(
+                  stream: FsService().categorias(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting) {
+                      return Text('Cargando categorías...');
+                    }
+                    var categorias = snapshot.data!.docs;
+                    return DropdownButtonFormField<int>(
+                      decoration: InputDecoration(
+                        labelText: 'Categoría',
+                      ),
+                      value: categoriaSeleccionada,
+                      onChanged: (value) {
+                        categoriaSeleccionada = value!;
+                      },
+                      items: categorias.map<DropdownMenuItem<int>>((categoria) {
+                        return DropdownMenuItem<int>(
+                          child: Text(categoria['nombre']),
+                          value: categoria['id'],
+                        );
+                      }).toList(),
+                    );
+                  },
                 ),
               ),
-              TextFormField(
-                controller: tiempoCoccionCtrl,
-                decoration: InputDecoration(
-                  labelText: 'Tiempo de coccion',
-                  errorText: tiempoCoccionError,
+
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: TextFormField(
+                  validator: (calificacion) {
+                    if (calificacion!.isEmpty) {
+                      return 'La calificación es requerida';
+                    }
+                    if (double.tryParse(calificacion) == null) {
+                      return 'La calificación debe ser un número';
+                    }
+                    return null;
+                  },
+                  controller: calificacionCtrl,
+                  decoration: InputDecoration(
+                    labelText: 'Calificación',
+                  ),
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
                 ),
               ),
-              TextFormField(
-                controller: imagenCtrl,
-                decoration: InputDecoration(
-                  labelText: 'Imagen',
-                  errorText: tiempoCoccionError,
+
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: TextFormField(
+                  validator: (tiempoCoccion) {
+                    if (tiempoCoccion!.isEmpty) {
+                      return 'El tiempo de cocción es requerido';
+                    }
+                    return null;
+                  },
+                  controller: tiempoCoccionCtrl,
+                  decoration: InputDecoration(
+                    labelText: 'Tiempo de Cocción',
+                  ),
                 ),
               ),
+
+              Container(
+                margin: EdgeInsets.only(bottom: 10),
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: TextFormField(
+                  validator: (imagen) {
+                    if (imagen!.isEmpty) {
+                      return 'La imagen es requerida';
+                    }
+                    return null;
+                  },
+                  controller: imagenCtrl,
+                  decoration: InputDecoration(
+                    labelText: 'URL de la Imagen',
+                  ),
+                ),
+              ),
+
               Container(
                 margin: EdgeInsets.only(top: 20),
                 width: double.infinity,
@@ -106,11 +173,9 @@ class _RecetasAgregarState extends State<RecetasAgregar> {
                   onPressed: () async {
                     if (formKey.currentState!.validate()){
                        String? categoria = await FsService().obtenerNombrePorId(categoriaSeleccionada);
-                       print("1234");
-                       print(categoria);
                        await FsService().agregarReceta(tituloCtrl.text, categoria, calificacionCtrl.text, tiempoCoccionCtrl.text, imagenCtrl.text);
+                       Navigator.pop(context);
                     }
-                    Navigator.pop(context);
                   },
                 ),
               ),
