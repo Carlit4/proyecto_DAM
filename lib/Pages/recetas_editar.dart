@@ -1,14 +1,14 @@
 import 'package:dam_cookly/services/fs_service.dart';
 import 'package:flutter/material.dart';
 
-class RecetasAgregar extends StatefulWidget {
-  const RecetasAgregar({super.key});
+class RecetasEditar extends StatefulWidget {
+  const RecetasEditar({super.key});
 
   @override
-  State<RecetasAgregar> createState() => _RecetasAgregarState();
+  State<RecetasEditar> createState() => _RecetasEditarState();
 }
 
-class _RecetasAgregarState extends State<RecetasAgregar> {
+class _RecetasEditarState extends State<RecetasEditar> {
   final formKey = GlobalKey<FormState>();
 
   TextEditingController tituloCtrl = TextEditingController();
