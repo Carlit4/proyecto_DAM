@@ -12,7 +12,20 @@
           "package_name": "com.proyectobonito.u3_firebase"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "446602697776-hp3safr5oboof39q3jf88vgsab6v4o4i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.proyectobonito.u3_firebase",
+            "certificate_hash": "300ae888e2be7bb50903e68cccd44699f9f9b153"
+          }
+        },
+        {
+          "client_id": "446602697776-702t6cucje1ta95b11t2q61pjjnkkb6q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAjwsDFxMduXxFxb5ltYSTTb2JsShdBmJM"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "446602697776-702t6cucje1ta95b11t2q61pjjnkkb6q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
