@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:dam_cookly/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class RecetasWidget extends StatelessWidget {
@@ -9,6 +9,11 @@ class RecetasWidget extends StatelessWidget {
   });
 
   final dynamic receta;
+
+  Future<String> _getUserEmail() async {
+    final user = await AuthService().currentUser();
+    return user?.email ?? 'Usuario';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -127,6 +132,31 @@ class RecetasWidget extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: FutureBuilder<String>(
+              future: _getUserEmail(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: CircularProgressIndicator(color: Colors.white),
+                  );
+                }
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    snapshot.data!,
+                    style: const TextStyle(
+                      color: Colors.yellow,
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ],
