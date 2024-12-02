@@ -12,25 +12,18 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  //controllers
   TextEditingController emailCtrl = TextEditingController();
   TextEditingController passwordCtrl = TextEditingController();
-  //String msgError = '';
 
-  //metodo login
   void login() async {
-    //tener la instancia de auth_service
     final authService = AuthService();
 
-    //metodo login
     try {
       await authService.signInWithEmailPassword(
         emailCtrl.text,
         passwordCtrl.text,
       );
-    }
-    //atrapar errores
-    catch (ex) {
+    } catch (ex) {
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -41,7 +34,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  //contraseña olvidada
   void forgotPw() {
     showDialog(
       context: context,
@@ -64,24 +56,17 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 50),
-
-                //logo
                 Icon(
                   MdiIcons.email,
                   color: Colors.grey,
                   size: 80,
                 ),
-
                 const SizedBox(height: 50),
-                //mensaje de inicio
                 Text(
                   'Bienvenid@, ingrese sus datos.',
                   style: TextStyle(color: Colors.grey, fontSize: 16),
                 ),
-
                 const SizedBox(height: 25),
-                //textfield de email
-
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 16),
                   child: TextField(
@@ -97,10 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 10),
-                //textfield de contraseña
-
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 16),
                   child: TextField(
@@ -113,39 +95,30 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 25),
-                //boton login
                 Container(
-                  padding: EdgeInsets.symmetric(
-                      vertical: 5,
-                      horizontal: 16), // Ajusta el valor según lo que necesites
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 16),
                   child: ElevatedButton(
                     onPressed: () {
-                      login(); // Llama a la función de inicio de sesión
+                      login();
                     },
                     style: ElevatedButton.styleFrom(
-                      minimumSize: Size(double.infinity,
-                          56), // Tamaño del botón similar a TextField
-                      backgroundColor: const Color.fromARGB(
-                          255, 241, 92, 142), // Color de fondo del botón
+                      minimumSize: Size(double.infinity, 56),
+                      backgroundColor: const Color.fromARGB(255, 241, 92, 142),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            8.0), // Bordes redondeados para coincidir con TextField
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
                     child: Text(
                       'Login',
                       style: TextStyle(
-                        fontSize: 18.0, // Tamaño de fuente para que sea legible
-                        color: Colors.white, // Color del texto
+                        fontSize: 18.0,
+                        color: Colors.white,
                       ),
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 25),
-                // mensaje para registrarse
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -167,7 +140,6 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
                 const SizedBox(height: 25),
-                //boton inicio de sesion de google
                 ElevatedButton(
                   onPressed: () {
                     AuthService().signInWithGoogle();

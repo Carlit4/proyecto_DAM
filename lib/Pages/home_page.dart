@@ -12,7 +12,6 @@ class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   void logout() {
-    //servicio auth para salir
     final auth = AuthService();
     auth.signOut();
   }
@@ -30,20 +29,20 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _loadUserEmail(); // Cargar el correo al inicializar
+    _loadUserEmail();
   }
 
   Future<void> _loadUserEmail() async {
     try {
       final user = await AuthService().currentUser();
       setState(() {
-        userEmail = user?.email; // Guardar el correo del usuario
-        isLoading = false; // Detener la carga
+        userEmail = user?.email;
+        isLoading = false;
       });
     } catch (e) {
       print("Error al cargar el usuario: $e");
       setState(() {
-        isLoading = false; // Detener la carga incluso en caso de error
+        isLoading = false;
       });
     }
   }
@@ -129,17 +128,13 @@ class _HomePageState extends State<HomePage> {
               trailing: TextButton(
                 onPressed: () async {
                   try {
-                    // Lógica de cierre de sesión usando AuthService
                     await AuthService().signOut();
-
-                    // Redirigir a LoginPage
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => LoginPage()),
                       (Route<dynamic> route) => false,
                     );
                   } catch (e) {
-                    // Manejo de errores (opcional)
                     print("Error al cerrar sesión: $e");
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Error al cerrar sesión')),
@@ -153,7 +148,6 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
 
-      //BODY
       body: paginas[paginaSeleccionada],
     );
   }

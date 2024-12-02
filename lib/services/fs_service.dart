@@ -5,17 +5,16 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
 
 class FsService {
-
   Stream<QuerySnapshot> recetas() {
     return FirebaseFirestore.instance.collection('recetas').snapshots();
   }
 
   Stream<DocumentSnapshot> recetaPorId(String id) {
-    return FirebaseFirestore.instance.collection('recetas').doc(id).snapshots();  
+    return FirebaseFirestore.instance.collection('recetas').doc(id).snapshots();
   }
 
-
-  Future<void> agregarReceta(String titulo, String? categoria, String calificacion, String tiempoCoccion, String imagen){
+  Future<void> agregarReceta(String titulo, String? categoria,
+      String calificacion, String tiempoCoccion, String imagen) {
     return FirebaseFirestore.instance.collection('recetas').doc().set({
       'titulo': titulo,
       'categoria': categoria,
@@ -25,7 +24,8 @@ class FsService {
     });
   }
 
-  Future<void> editarReceta(String recetaId, String titulo, String? categoria, String calificacion, String tiempoCoccion, String imagen){
+  Future<void> editarReceta(String recetaId, String titulo, String? categoria,
+      String calificacion, String tiempoCoccion, String imagen) {
     return FirebaseFirestore.instance.collection('recetas').doc(recetaId).set({
       'titulo': titulo,
       'categoria': categoria,
@@ -36,24 +36,23 @@ class FsService {
   }
 
   Future<void> borrarReceta(String recetaId) {
-    return FirebaseFirestore.instance.collection('recetas').doc(recetaId).delete();
+    return FirebaseFirestore.instance
+        .collection('recetas')
+        .doc(recetaId)
+        .delete();
   }
 
-Future<String> guardarImagenLocalmente(File imagen) async {
-  // Obtén el directorio de documentos de la app
-  final Directory appDir = await getApplicationDocumentsDirectory();
+  Future<String> guardarImagenLocalmente(File imagen) async {
+    final Directory appDir = await getApplicationDocumentsDirectory();
 
-  // Genera un nombre único para la imagen
-  final String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+    final String fileName = DateTime.now().millisecondsSinceEpoch.toString();
 
-  // Copia la imagen en el directorio
-  final File localImage = await imagen.copy('${appDir.path}/$fileName.jpg');
+    final File localImage = await imagen.copy('${appDir.path}/$fileName.jpg');
 
-  // Devuelve la ruta local
-  return localImage.path;
-}
+    return localImage.path;
+  }
 
-  Stream<QuerySnapshot> categorias(){
+  Stream<QuerySnapshot> categorias() {
     return FirebaseFirestore.instance.collection('categorias').snapshots();
   }
 
@@ -74,5 +73,4 @@ Future<String> guardarImagenLocalmente(File imagen) async {
         .get();
     return query.docs.first['id'];
   }
-  
 }
