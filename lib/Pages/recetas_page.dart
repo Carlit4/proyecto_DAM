@@ -13,7 +13,7 @@ class RecetasPage extends StatefulWidget {
 }
 
 class _RecetasPageState extends State<RecetasPage> {
-   Future<dynamic> _confirmBorrado(BuildContext context, receta) {
+  Future<dynamic> _confirmBorrado(BuildContext context, receta) {
     return showDialog(
         barrierDismissible: false,
         context: context,
@@ -37,62 +37,68 @@ class _RecetasPageState extends State<RecetasPage> {
 
   @override
   Widget build(BuildContext context) {
-     return Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: StreamBuilder(
-                stream: FsService().recetas(),
-                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  return ListView.separated(
-                    separatorBuilder: (context, index) => Divider(),
-                    itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (context, index) {
-                      var receta = snapshot.data!.docs[index];
-                      return Slidable(
-                        endActionPane: ActionPane(
-                          motion: ScrollMotion(),
-                          children: [
-                            SlidableAction(
-                              onPressed: (context) {
-                                this._confirmBorrado(context, receta).then((confirmarBorrado) {
-                                  if (confirmarBorrado) {
-                                    setState(() {
-                                      FsService().borrarReceta(receta.id);
-                                    });
-                                  }
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: StreamBuilder(
+          stream: FsService().recetas(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData ||
+                snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+            return ListView.separated(
+              separatorBuilder: (context, index) => Divider(),
+              itemCount: snapshot.data!.docs.length,
+              itemBuilder: (context, index) {
+                var receta = snapshot.data!.docs[index];
+                return Slidable(
+                    endActionPane: ActionPane(
+                      motion: ScrollMotion(),
+                      children: [
+                        SlidableAction(
+                          onPressed: (context) {
+                            this
+                                ._confirmBorrado(context, receta)
+                                .then((confirmarBorrado) {
+                              if (confirmarBorrado) {
+                                setState(() {
+                                  FsService().borrarReceta(receta.id);
                                 });
-                              },
-                              icon: Icons.delete,
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.red,
-                              label: 'Eliminar',
-                            ),
-                          ],
+                              }
+                            });
+                          },
+                          icon: Icons.delete,
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.red,
+                          label: 'Eliminar',
                         ),
-                        startActionPane: ActionPane(
-                          motion: ScrollMotion(),
-                          children: [
-                            SlidableAction(
-                              onPressed: (context) {
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => RecetasEditar(recetaId: receta.id)));
-                              },
-                              icon: Icons.edit,
-                              foregroundColor: Colors.white,
-                              backgroundColor: Colors.blue,
-                              label: 'Editar',
-                            ),
-                          ],
+                      ],
+                    ),
+                    startActionPane: ActionPane(
+                      motion: ScrollMotion(),
+                      children: [
+                        SlidableAction(
+                          onPressed: (context) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        RecetasEditar(recetaId: receta.id)));
+                          },
+                          icon: Icons.edit,
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.blue,
+                          label: 'Editar',
                         ),
-                        child: RecetasWidget(receta: receta)
-                      );
-                    },
-                  );
-                },
-              ),
-            ),
-          );
+                      ],
+                    ),
+                    child: RecetasWidget(receta: receta));
+              },
+            );
+          },
+        ),
+      ),
+    );
   }
 }

@@ -42,6 +42,13 @@ class FsService {
         .delete();
   }
 
+  Future<void> borrarCategoria(String categoriaId) {
+    return FirebaseFirestore.instance
+        .collection('categoria')
+        .doc(categoriaId)
+        .delete();
+  }
+
   Future<String> guardarImagenLocalmente(File imagen) async {
     final Directory appDir = await getApplicationDocumentsDirectory();
 

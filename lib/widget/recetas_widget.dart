@@ -28,13 +28,13 @@ class RecetasWidget extends StatelessWidget {
           ),
         ],
         image: DecorationImage(
-                image: FileImage(File(receta['rutaImagen'])),
-                fit: BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                  Colors.black.withOpacity(0.35),
-                  BlendMode.multiply,
-                ),
-              ),
+          image: FileImage(File(receta['rutaImagen'])),
+          fit: BoxFit.cover,
+          colorFilter: ColorFilter.mode(
+            Colors.black.withOpacity(0.35),
+            BlendMode.multiply,
+          ),
+        ),
       ),
       child: Stack(
         children: [
