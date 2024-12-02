@@ -135,7 +135,7 @@ class RecetasWidget extends StatelessWidget {
             ),
           ),
           Align(
-            alignment: Alignment.topRight,
+            alignment: Alignment.topLeft,
             child: FutureBuilder<String>(
               future: _getUserEmail(),
               builder: (context, snapshot) {
@@ -148,7 +148,7 @@ class RecetasWidget extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    snapshot.data!,
+                    "Publicado por: " + snapshot.data!,
                     style: const TextStyle(
                       color: Colors.yellow,
                       fontSize: 14,
