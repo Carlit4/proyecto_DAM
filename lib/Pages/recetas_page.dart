@@ -5,8 +5,35 @@ import 'package:dam_cookly/widget/recetas_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-class RecetasPage extends StatelessWidget {
+class RecetasPage extends StatefulWidget {
   const RecetasPage({super.key});
+
+  @override
+  State<RecetasPage> createState() => _RecetasPageState();
+}
+
+class _RecetasPageState extends State<RecetasPage> {
+   Future<dynamic> _confirmBorrado(BuildContext context, receta) {
+    return showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Confirmar Borrado'),
+            content: Text('Desea borrar la receta: ' + receta['titulo'] + "?"),
+            actions: [
+              TextButton(
+                child: Text('Cancelar'),
+                onPressed: () => Navigator.pop(context, false),
+              ),
+              ElevatedButton(
+                child: Text('Aceptar'),
+                onPressed: () => Navigator.pop(context, true),
+              ),
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +57,13 @@ class RecetasPage extends StatelessWidget {
                           children: [
                             SlidableAction(
                               onPressed: (context) {
-                                FsService().borrarReceta(receta.id);
+                                this._confirmBorrado(context, receta).then((confirmarBorrado) {
+                                  if (confirmarBorrado) {
+                                    setState(() {
+                                      FsService().borrarReceta(receta.id);
+                                    });
+                                  }
+                                });
                               },
                               icon: Icons.delete,
                               foregroundColor: Colors.white,

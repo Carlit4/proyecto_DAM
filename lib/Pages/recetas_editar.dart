@@ -54,7 +54,7 @@ class _RecetasEditarState extends State<RecetasEditar> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.restaurant_menu),
-            Text('Agregar receta',
+            Text('Editar receta',
                 style: TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
