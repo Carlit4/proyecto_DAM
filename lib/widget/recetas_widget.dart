@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class RecetasWidget extends StatelessWidget {
@@ -26,13 +28,13 @@ class RecetasWidget extends StatelessWidget {
           ),
         ],
         image: DecorationImage(
-          colorFilter: ColorFilter.mode(
-            Colors.black.withOpacity(0.35),
-            BlendMode.multiply,
-          ),
-          image: AssetImage(receta['rutaImagen']), // Usando ruta de imagen local
-          fit: BoxFit.cover,
-        ),
+                image: FileImage(File(receta['rutaImagen'])),
+                fit: BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(0.35),
+                  BlendMode.multiply,
+                ),
+              ),
       ),
       child: Stack(
         children: [
@@ -102,7 +104,6 @@ class RecetasWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Agregamos el contenedor para la categoría
                 Container(
                   padding: const EdgeInsets.all(5),
                   margin: const EdgeInsets.all(10),

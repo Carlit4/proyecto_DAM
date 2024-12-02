@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:dam_cookly/services/fs_service.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class RecetasEditar extends StatefulWidget {
   const RecetasEditar({super.key, required this.recetaId});
@@ -19,12 +23,28 @@ class _RecetasEditarState extends State<RecetasEditar> {
   int categoriaSeleccionada = 1;
 
   String categoria = "";
+  File? imagenSeleccionada;
 
   String? tituloError;
   String? categoriaError;
   String? calificacionError;
   String? tiempoCoccionError;
   String? imagenError;
+
+    Future<void> seleccionarImagen() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    if (image != null) {
+      final Directory appDir = await getApplicationDocumentsDirectory();
+      final String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      final File localImage = await File(image.path).copy('${appDir.path}/$fileName.jpg');
+
+      setState(() {
+        imagenSeleccionada = localImage;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -164,25 +184,19 @@ class _RecetasEditarState extends State<RecetasEditar> {
                             ),
                           ),
 
-                          Container(
-                            margin: EdgeInsets.only(bottom: 10),
-                            padding: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: TextFormField(
-                              validator: (imagen) {
-                                if (imagen!.isEmpty) {
-                                  return 'La imagen es requerida';
-                                }
-                                return null;
-                              },
-                              controller: imagenCtrl,
-                              decoration: InputDecoration(
-                                labelText: 'URL de la Imagen',
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Imagen'),
+                              SizedBox(height: 10),
+                              if (imagenSeleccionada != null)
+                                Image.file(imagenSeleccionada!, height: 150, width: 150),
+                              SizedBox(height: 10),
+                              ElevatedButton(
+                                onPressed: seleccionarImagen,
+                                child: Text('Seleccionar Imagen'),
                               ),
-                            ),
+                            ],
                           ),
 
                           Container(
@@ -193,7 +207,8 @@ class _RecetasEditarState extends State<RecetasEditar> {
                               onPressed: () async {
                                 if (formKey.currentState!.validate()){
                                   String? categoria = await FsService().obtenerNombrePorId(categoriaSeleccionada);
-                                  await FsService().agregarReceta(tituloCtrl.text, categoria, calificacionCtrl.text, tiempoCoccionCtrl.text, imagenCtrl.text);
+                                  String imagenUrl = await FsService().guardarImagenLocalmente(imagenSeleccionada!);
+                                  await FsService().agregarReceta(tituloCtrl.text, categoria, calificacionCtrl.text, tiempoCoccionCtrl.text, imagenUrl);
                                   Navigator.pop(context);
                                 }
                               },

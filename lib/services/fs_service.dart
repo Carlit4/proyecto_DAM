@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path_provider/path_provider.dart';
 
 class FsService {
 
@@ -34,6 +38,20 @@ class FsService {
   Future<void> borrarReceta(String recetaId) {
     return FirebaseFirestore.instance.collection('recetas').doc(recetaId).delete();
   }
+
+Future<String> guardarImagenLocalmente(File imagen) async {
+  // Obtén el directorio de documentos de la app
+  final Directory appDir = await getApplicationDocumentsDirectory();
+
+  // Genera un nombre único para la imagen
+  final String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+
+  // Copia la imagen en el directorio
+  final File localImage = await imagen.copy('${appDir.path}/$fileName.jpg');
+
+  // Devuelve la ruta local
+  return localImage.path;
+}
 
   Stream<QuerySnapshot> categorias(){
     return FirebaseFirestore.instance.collection('categorias').snapshots();
