@@ -58,13 +58,12 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.restaurant_menu),
-            Text('COOKLY Martin y Goku',
-                style: TextStyle(fontWeight: FontWeight.bold)),
+            Text('COOKLY', style: TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
       ),
 
-       floatingActionButton: paginaSeleccionada == 0
+      floatingActionButton: paginaSeleccionada == 0
           ? FloatingActionButton(
               backgroundColor: Colors.deepOrange,
               foregroundColor: Colors.white,
@@ -81,10 +80,10 @@ class _HomePageState extends State<HomePage> {
               foregroundColor: Colors.white,
               child: Icon(Icons.add),
               onPressed: () {
-                  Navigator.push(
+                Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => CategoriasAgregar()),
-                 );
+                );
               },
             ),
 
