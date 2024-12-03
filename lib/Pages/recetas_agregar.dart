@@ -94,29 +94,41 @@ class _RecetasAgregarState extends State<RecetasAgregar> {
                   borderRadius: BorderRadius.circular(5),
                 ),
                 child: StreamBuilder(
-                  stream: FsService().categorias(),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting) {
-                      return Text('Cargando categorías...');
-                    }
-                    var categorias = snapshot.data!.docs;
-                    return DropdownButtonFormField<int>(
-                      decoration: InputDecoration(
-                        labelText: 'Categoría',
-                      ),
-                      value: categoriaSeleccionada,
-                      onChanged: (value) {
-                        categoriaSeleccionada = value!;
-                      },
-                      items: categorias.map<DropdownMenuItem<int>>((categoria) {
-                        return DropdownMenuItem<int>(
-                          child: Text(categoria['nombre']),
-                          value: categoria['id'],
+                    stream: FsService().categorias(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting) {
+                        return Text('Cargando categorías...');
+                      }
+
+                      try {
+                        var categorias = snapshot.data!.docs;
+                        return DropdownButtonFormField<int>(
+                          decoration: InputDecoration(
+                            labelText: 'Categoría',
+                          ),
+                          value: categoriaSeleccionada,
+                          onChanged: (value) {
+                            setState(() {
+                              categoriaSeleccionada = value!;
+                            });
+                          },
+                          items: categorias.map<DropdownMenuItem<int>>((categoria) {
+                            var data = categoria.data() as Map<String, dynamic>;
+                            if (!data.containsKey('id') || !data.containsKey('nombre')) {
+                              throw Exception('Faltan campos en el documento.');
+                            }
+                            return DropdownMenuItem<int>(
+                              child: Text(data['nombre']),
+                              value: data['id'], 
+                            );
+                          }).toList(),
                         );
-                      }).toList(),
-                    );
-                  },
-                ),
+                      } catch (e) {
+                        return Text('Error al cargar categorías: ${e.toString()}');
+                      }
+                    },
+                  ),
+
               ),
 
               Container(

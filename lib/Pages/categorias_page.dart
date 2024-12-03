@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dam_cookly/Pages/categorias_editar.dart';
 import 'package:dam_cookly/services/fs_service.dart';
 import 'package:dam_cookly/widget/categorias_widget.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +76,25 @@ class _CategoriasPageState extends State<CategoriasPage> {
                         ),
                       ],
                     ),
-                    child: CategoriasWidget(categoria: categoria));
+                    startActionPane: ActionPane(
+                      motion: ScrollMotion(),
+                      children: [
+                        SlidableAction(
+                          onPressed: (context) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        CategoriasEditar(categoria: categoria,)));
+                          },
+                          icon: Icons.edit,
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.blue,
+                          label: 'Editar',
+                        ),
+                      ],
+                    ),
+                    child: CategoriasWidget(categoria: categoria),);
               },
             );
           },

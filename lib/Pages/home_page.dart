@@ -1,3 +1,4 @@
+import 'package:dam_cookly/Pages/categorias_agregar.dart';
 import 'package:dam_cookly/Pages/categorias_page.dart';
 import 'package:dam_cookly/Pages/login_page.dart';
 import 'package:dam_cookly/Pages/recetas_agregar.dart';
@@ -63,15 +64,29 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
 
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepOrange,
-        foregroundColor: Colors.white,
-        child: Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => RecetasAgregar()));
-        },
-      ),
+       floatingActionButton: paginaSeleccionada == 0
+          ? FloatingActionButton(
+              backgroundColor: Colors.deepOrange,
+              foregroundColor: Colors.white,
+              child: Icon(Icons.add),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RecetasAgregar()),
+                );
+              },
+            )
+          : FloatingActionButton(
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
+              child: Icon(Icons.add),
+              onPressed: () {
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CategoriasAgregar()),
+                 );
+              },
+            ),
 
       //DRAWER
       endDrawer: Drawer(

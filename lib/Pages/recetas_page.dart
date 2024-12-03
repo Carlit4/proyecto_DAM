@@ -37,6 +37,7 @@ class _RecetasPageState extends State<RecetasPage> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Expanded(
       child: Padding(
         padding: EdgeInsets.all(10),
@@ -47,6 +48,7 @@ class _RecetasPageState extends State<RecetasPage> {
                 snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
             }
+            
             return ListView.separated(
               separatorBuilder: (context, index) => Divider(),
               itemCount: snapshot.data!.docs.length,

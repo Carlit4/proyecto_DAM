@@ -42,9 +42,15 @@ class FsService {
         .delete();
   }
 
+  Future<void> editarCategoria(String categoriaId, String nombre) {
+    return FirebaseFirestore.instance.collection('categorias').doc(categoriaId).set({
+      'nombre': nombre,
+    });
+  }
+
   Future<void> borrarCategoria(String categoriaId) {
     return FirebaseFirestore.instance
-        .collection('categoria')
+        .collection('categorias')
         .doc(categoriaId)
         .delete();
   }
@@ -61,6 +67,13 @@ class FsService {
 
   Stream<QuerySnapshot> categorias() {
     return FirebaseFirestore.instance.collection('categorias').snapshots();
+  }
+
+  Future<void> agregarCategoria(int? id, String nombre) {
+    return FirebaseFirestore.instance.collection('categorias').doc().set({
+      'id': id,
+      'nombre': nombre,
+    });
   }
 
   Future<String> obtenerNombrePorId(int id) async {
